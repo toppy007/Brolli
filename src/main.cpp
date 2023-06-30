@@ -6,15 +6,16 @@
 #include <ArduinoJson.h>
 #include <Time.h>
 #include <Adafruit_NeoPixel.h>
+#include "LEDControl.h"
 
-#define LED_PIN D4
+#define LED_PIN 4
 #define LED_COUNT 24
 
 // =====================================================
 // ========= User configured stuff starts here =========
 
-#define SSID "TOPPY"
-#define SSID_PASSWORD "top007196"
+#define SSID ""
+#define SSID_PASSWORD ""
 
 // =========  User configured stuff ends here  =========
 // =====================================================
@@ -39,8 +40,9 @@ void parsePrecipitationProbability(const char* jsonResponse) {
   for (int i = 0; i < arraySize; ++i) {
     int value = precipitationArray[i].as<int>();
     Serial.println(value);
-    strip.setPixelColor(i, strip.Color(0, 250, 0));
+    controlLEDs(strip, &i, &value);
     strip.show();
+    delay(1000);
   }
 }
 
@@ -70,6 +72,9 @@ void makeHttpRequest() {
 }
 
 void setup() {
+  strip.begin();
+  strip.show();  // Initialize all pixels to off
+
   Serial.begin(115200);
   // Serial.setDebugOutput(true);
   Serial.println();
@@ -89,5 +94,5 @@ void loop() {
   if (WiFiMulti.run() == WL_CONNECTED) {
     makeHttpRequest();
   }
-  delay(100000);
+  delay(200000);
 }
