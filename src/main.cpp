@@ -14,8 +14,8 @@
 // =====================================================
 // ========= User configured stuff starts here =========
 
-#define SSID ""
-#define SSID_PASSWORD ""
+#define SSID "TOPPY"
+#define SSID_PASSWORD "password"
 
 // =========  User configured stuff ends here  =========
 // =====================================================
@@ -76,19 +76,21 @@ void setup() {
   strip.show();  // Initialize all pixels to off
 
   Serial.begin(115200);
-  // Serial.setDebugOutput(true);
-  Serial.println();
-  Serial.println();
-  Serial.println();
 
-  for (uint8_t t = 4; t > 0; t--) {
-    Serial.printf("[SETUP] WAIT %d...\n", t);
-    Serial.flush();
-    delay(1000);
+  while (WiFiMulti.run() != WL_CONNECTED) {
+    WiFi.mode(WIFI_STA);
+    WiFiMulti.addAP(SSID, SSID_PASSWORD);
+
+    Serial.print(".");
+    strip.setPixelColor(1, 0, 250, 250);
+    strip.show();
   }
-  WiFi.mode(WIFI_STA);
-  WiFiMulti.addAP(SSID, SSID_PASSWORD);
+  
+  Serial.println();
+  Serial.println("Wi-Fi connected!");
+  strip.clear();
 }
+
 
 void loop() {
   if (WiFiMulti.run() == WL_CONNECTED) {
