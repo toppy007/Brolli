@@ -6,22 +6,13 @@
 #include <ArduinoJson.h>
 #include <Time.h>
 #include <Adafruit_NeoPixel.h>
+#include <WiFiManager.h>
 #include "LEDControl.h"
 
 #define LED_PIN 4
 #define LED_COUNT 24
 
-// =====================================================
-// ========= User configured stuff starts here =========
-
-#define SSID "TOPPY"
-#define SSID_PASSWORD "password"
-
-// =========  User configured stuff ends here  =========
-// =====================================================
-
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800); //defines the strips properties
-
 ESP8266WiFiMulti WiFiMulti;
 
 void parsePrecipitationProbability(const char* jsonResponse) {
@@ -72,23 +63,17 @@ void makeHttpRequest() {
 }
 
 void setup() {
+  WiFiManager wifiManager;
+
   strip.begin();
   strip.show();  // Initialize all pixels to off
 
   Serial.begin(115200);
+  wifiManager.autoConnect("Brolli");
 
-  while (WiFiMulti.run() != WL_CONNECTED) {
-    WiFi.mode(WIFI_STA);
-    WiFiMulti.addAP(SSID, SSID_PASSWORD);
-
-    Serial.print(".");
-    strip.setPixelColor(1, 0, 250, 250);
-    strip.show();
-  }
-  
-  Serial.println();
-  Serial.println("Wi-Fi connected!");
-  strip.clear();
+  Serial.print(".");
+  strip.setPixelColor(1, 0, 250, 250);
+  strip.show();
 }
 
 
