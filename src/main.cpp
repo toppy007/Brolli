@@ -7,7 +7,7 @@
 #include <Time.h>
 #include <Adafruit_NeoPixel.h>
 #include <WiFiManager.h>
-#include "LEDControl.h"
+#include <LEDControl.h>
 
 #define LED_PIN 4
 #define LED_COUNT 24
@@ -70,12 +70,7 @@ void setup() {
 
   Serial.begin(115200);
   wifiManager.autoConnect("Brolli");
-
-  Serial.print(".");
-  strip.setPixelColor(1, 0, 250, 250);
-  strip.show();
 }
-
 
 void loop() {
   if (WiFiMulti.run() == WL_CONNECTED) {
