@@ -51,7 +51,6 @@ void makeHttpRequest() {
   HTTPClient http;
 
   Serial.print("[HTTP] begin...\n");
-  // configure server and URL(HARDCODED)
   http.begin(client, "http://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=precipitation_probability&timezone=GMT&forecast_days=1");
 
   Serial.print("[HTTP] GET...\n");
@@ -73,7 +72,7 @@ void makeHttpRequest() {
 
 void setup() {
   strip.begin();
-  strip.show();  // Initialize all pixels to off
+  strip.show();  
 
   Serial.begin(115200);
 
@@ -91,10 +90,12 @@ void setup() {
   strip.clear();
 }
 
-
 void loop() {
-  if (WiFiMulti.run() == WL_CONNECTED) {
+  while (WiFiMulti.run() == WL_CONNECTED) {
     makeHttpRequest();
+    delay(200000); // Delay for 200 seconds (200,000 milliseconds)
   }
-  delay(200000);
 }
+
+
+
