@@ -2,6 +2,44 @@
 
 Neo-Pixel Umbrella Stand API Precipitation Forecaster 
 
+## Weather Forecast LED Indicator
+This Arduino program utilizes an ESP8266 module, NeoPixel LED strip, and Wi-Fi connectivity to provide a visual indication of hourly precipitation probability for a specific location. It fetches weather forecast data from the Open Meteo API and uses NeoPixel LEDs to display the information.
+
+## Components Used
+#### ESP8266 Module: 
+The program is designed to work with an ESP8266-based microcontroller, such as the NodeMCU or Wemos D1 Mini.
+
+#### NeoPixel LED Strip: 
+An Adafruit NeoPixel LED strip with a defined number of LEDs (LED_COUNT) is used to display the precipitation probability.
+
+## User Configuration
+Before uploading the program, the user must configure the following settings in the code:
+
+#### Wi-Fi Configuration: 
+Set your Wi-Fi network name (SSID) and password (SSID_PASSWORD) to enable the ESP8266 to connect to the internet.
+
+#### LED Configuration: 
+Specify the pin number (LED_PIN) and the total number of LEDs in your NeoPixel strip (LED_COUNT).
+
+## Program Overview
+The program establishes a Wi-Fi connection using the provided credentials.
+
+It continuously makes HTTP requests to the Open Meteo API to fetch weather forecast data for a specific location (latitude and longitude).
+
+The program then parses the JSON response from the API to extract the hourly precipitation probability data.
+
+For each hour in the forecast, the precipitation probability is displayed using NeoPixel LEDs. The LED color and intensity represent the probability, with higher probabilities resulting in brighter or differently colored LEDs.
+
+The LED strip is updated every hour with the new precipitation data.
+
+The program runs in a loop, continuously updating the LED display with the latest forecast data.
+
+## LED Display
+
+The NeoPixel LED strip is controlled by the controlLEDs function, which maps the precipitation probability to LED colors and brightness levels. This function is called for each hour in the forecast.
+
+The LEDs provide a visual indication of the precipitation probability, making it easy to glance at the weather forecast at a glance.
+
 # WEMOS D1 R1 PCB hat for Neopixel
 
 ![PCB](/public/images/PCB_Brolli.png)
